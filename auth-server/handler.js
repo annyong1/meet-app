@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
 const { google } = require("googleapis");
 const calendar = google.calendar("v3");
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
-const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
-const redirect_uris = [
-  "https://annyong1.github.io/meet-app/"
+const SCOPES = [
+  "https://www.googleapis.com/auth/calendar.events.public.readonly",
 ];
+const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
+const redirect_uris = ["https://annyong1.github.io/meet-app/"];
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -17,7 +17,7 @@ const oAuth2Client = new google.auth.OAuth2(
 module.exports.getAuthURL = async () => {
   /**
    *
-   * Scopes array is passed to the `scope` option. 
+   * Scopes array is passed to the `scope` option.
    *
    */
   const authUrl = oAuth2Client.generateAuthUrl({
@@ -28,8 +28,8 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
       authUrl,
@@ -54,12 +54,12 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((results) => {
-      // Respond with OAuth token 
+      // Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify(results),
       };
@@ -68,10 +68,6 @@ module.exports.getAccessToken = async (event) => {
       // Handle error
       return {
         statusCode: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        }
         body: JSON.stringify(error),
       };
     });
@@ -79,7 +75,10 @@ module.exports.getAccessToken = async (event) => {
 
 module.exports.getCalendarEvents = async (event) => {
   // Decode authorization code extracted from the URL query
-  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
+  oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
     calendar.events.list(
@@ -100,12 +99,12 @@ module.exports.getCalendarEvents = async (event) => {
     );
   })
     .then((results) => {
-      // Respond with OAuth token 
+      // Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify({ events: results.data.items }),
       };
@@ -114,6 +113,10 @@ module.exports.getCalendarEvents = async (event) => {
       // Handle error
       return {
         statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify(error),
       };
     });
