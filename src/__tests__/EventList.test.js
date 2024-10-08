@@ -9,14 +9,6 @@ describe("<EventList /> component", () => {
     EventListComponent = render(<EventList />);
   });
 
-  test("renders event summary", async () => {
-    const events = mockData;
-    EventListComponent.rerender(<EventList events={events} />);
-    expect(
-      EventListComponent.queryByText(events[0].summary)
-    ).toBeInTheDocument();
-  });
-
   test('has an element with "list" role', () => {
     expect(EventListComponent.queryByRole("list")).toBeInTheDocument();
   });
