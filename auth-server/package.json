@@ -5,7 +5,7 @@
   "scripts": {
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "test:ci": "cross-env CI=true react-scripts test --forceExit --detectOpenHandles"q
+    "test:ci": "cross-env CI=true react-scripts test --forceExit --detectOpenHandles"
   },
   "jest": {
     "collectCoverage": true
