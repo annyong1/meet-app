@@ -41,27 +41,32 @@ const checkToken = async (accessToken) => {
  * This function will fetch the list of all events
  */
 export const getEvents = async () => {
-  if (window.location.href.startsWith('http://localhost')) {
+  if (window.location.href.startsWith("http://localhost")) {
     return mockData;
   }
 
-  const token = await getAccessToken();  
+  const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url =  "https://ekdx55xpv7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
+    const url =
+      "https://ekdx55xpv7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" +
+      "/" +
+      token;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
       return result.events;
-    } else return null; 
+    } else return null;
   }
 };
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    'https://ekdx55xpv7.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode
+    "https://ekdx55xpv7.execute-api.eu-central-1.amazonaws.com/dev/api/token" +
+      "/" +
+      encodeCode
   );
   const { access_token } = await response.json();
   access_token && localStorage.setItem("access_token", access_token);

@@ -33,6 +33,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "jest": {
+    "preset": "jest-puppeteer"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -52,6 +55,9 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.1.1",
+    "jest-cucumber": "^4.5.0",
+    "jest-puppeteer": "^6.0.0",
+    "puppeteer": "^20.9.0"
   }
 }
